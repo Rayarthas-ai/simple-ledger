@@ -1,6 +1,7 @@
 package com.arthas.simpleledger.ui.statistics
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.arthas.simpleledger.data.CategoryExpenseSummary
 import com.arthas.simpleledger.data.TransactionRepository
 import com.arthas.simpleledger.model.CurrencyCode
@@ -66,7 +67,7 @@ class StatisticsViewModel(private val repository: TransactionRepository) : ViewM
                 trendPoints = TrendSummaryUtil.fillTrend(selectedPeriod, selectedRange, trendRows)
             )
         }
-    }.stateIn(kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main), SharingStarted.WhileSubscribed(5_000), StatisticsUiState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), StatisticsUiState())
 
     fun setPeriod(value: StatsPeriod) {
         period.value = value
